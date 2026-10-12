@@ -29,22 +29,15 @@ FRONTEND_DIR = BASE_DIR / "frontend"
 
 
 def run_db_migrations() -> None:
-    """Run Alembic migrations programmatically to ensure current schema."""
+    """Create all tables using SQLAlchemy metadata (skip Alembic for now)."""
+    print("[DEBUG] run_db_migrations: starting create_all", flush=True)
     try:
-        from alembic import command
-        from alembic.config import Config
-
-        alembic_ini_path = Path(__file__).resolve().parent / "alembic.ini"
-        if alembic_ini_path.exists():
-            cfg = Config(str(alembic_ini_path))
-            command.upgrade(cfg, "head")
-        else:
-            logger.warning("alembic.ini not found, falling back to create_all")
-            Base.metadata.create_all(bind=engine)
-    except BaseException:
-        logger.error("Alembic migration failed, falling back to create_all:\n%s", traceback.format_exc())
-        sys.stderr.flush()
         Base.metadata.create_all(bind=engine)
+        print("[DEBUG] run_db_migrations: create_all complete", flush=True)
+    except BaseException:
+        print(f"[DEBUG] run_db_migrations FAILED:\n{traceback.format_exc()}", flush=True)
+        sys.stderr.flush()
+        raise
 
 
 def seed_database(db: Session) -> None:
