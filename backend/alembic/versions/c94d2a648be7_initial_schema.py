@@ -107,7 +107,6 @@ def upgrade() -> None:
             ["customer_id"],
             unique=True,
             postgresql_where=sa.text("status IN ('WAITING', 'CALLED')"),
-            sqlite_where=sa.text("status IN ('WAITING', 'CALLED')"),
         )
         op.create_index(
             "ux_tokens_active_phone",
@@ -115,7 +114,6 @@ def upgrade() -> None:
             ["customer_phone"],
             unique=True,
             postgresql_where=sa.text("status IN ('WAITING', 'CALLED') AND customer_phone IS NOT NULL"),
-            sqlite_where=sa.text("status IN ('WAITING', 'CALLED') AND customer_phone IS NOT NULL"),
         )
 
     # 5. audit_logs

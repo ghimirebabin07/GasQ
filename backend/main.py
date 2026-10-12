@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import sys
 import traceback
 from collections.abc import Callable
 from contextlib import asynccontextmanager
@@ -19,7 +20,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import RedirectResponse, Response
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s", stream=sys.stderr)
 logger = logging.getLogger("gasq.startup")
 
 settings = get_settings()
@@ -40,8 +41,9 @@ def run_db_migrations() -> None:
         else:
             logger.warning("alembic.ini not found, falling back to create_all")
             Base.metadata.create_all(bind=engine)
-    except Exception:
+    except BaseException:
         logger.error("Alembic migration failed, falling back to create_all:\n%s", traceback.format_exc())
+        sys.stderr.flush()
         Base.metadata.create_all(bind=engine)
 
 
@@ -132,8 +134,9 @@ def initialize_database() -> None:
         logger.info("Seeding database...")
         seed_database(db)
         logger.info("Database seeding complete.")
-    except Exception:
+    except BaseException:
         logger.error("seed_database failed:\n%s", traceback.format_exc())
+        sys.stderr.flush()
         raise
     finally:
         db.close()
@@ -144,8 +147,9 @@ def initialize_database() -> None:
 async def lifespan(_app: FastAPI):
     try:
         initialize_database()
-    except Exception:
+    except BaseException:
         logger.error("initialize_database crashed:\n%s", traceback.format_exc())
+        sys.stderr.flush()
         raise
 
     scheduler_task = None
@@ -155,11 +159,13 @@ async def lifespan(_app: FastAPI):
 
             scheduler_task = asyncio.create_task(background_scheduler_loop(interval_seconds=30))
             logger.info("Background scheduler started.")
-        except Exception:
+        except BaseException:
             logger.error("Failed to start background scheduler:\n%s", traceback.format_exc())
+            sys.stderr.flush()
             raise
 
     logger.info("Application startup complete — yielding to uvicorn.")
+    sys.stderr.flush()
     try:
         yield
     finally:
