@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy python packages from builder stage
 COPY --from=builder /root/.local /root/.local
+RUN chmod -R a+rX /root/.local
 ENV PATH=/root/.local/bin:$PATH
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
