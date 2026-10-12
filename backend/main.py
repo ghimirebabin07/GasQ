@@ -1,4 +1,6 @@
 import asyncio
+import logging
+import traceback
 from collections.abc import Callable
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -17,6 +19,9 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import RedirectResponse, Response
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+logger = logging.getLogger("gasq.startup")
+
 settings = get_settings()
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
@@ -33,8 +38,10 @@ def run_db_migrations() -> None:
             cfg = Config(str(alembic_ini_path))
             command.upgrade(cfg, "head")
         else:
+            logger.warning("alembic.ini not found, falling back to create_all")
             Base.metadata.create_all(bind=engine)
     except Exception:
+        logger.error("Alembic migration failed, falling back to create_all:\n%s", traceback.format_exc())
         Base.metadata.create_all(bind=engine)
 
 
@@ -111,26 +118,48 @@ def seed_database(db: Session) -> None:
 
 
 def initialize_database() -> None:
+    logger.info("Initializing database (environment=%s)", settings.environment)
     if settings.environment != "test":
+        logger.info("Running Alembic migrations...")
         run_db_migrations()
+        logger.info("Alembic migrations complete.")
     else:
+        logger.info("Test environment — creating tables directly.")
         Base.metadata.create_all(bind=engine)
 
     db = SessionLocal()
     try:
+        logger.info("Seeding database...")
         seed_database(db)
+        logger.info("Database seeding complete.")
+    except Exception:
+        logger.error("seed_database failed:\n%s", traceback.format_exc())
+        raise
     finally:
         db.close()
+    logger.info("Database initialization finished.")
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    initialize_database()
+    try:
+        initialize_database()
+    except Exception:
+        logger.error("initialize_database crashed:\n%s", traceback.format_exc())
+        raise
+
     scheduler_task = None
     if settings.environment != "test":
-        from workers.scheduler import background_scheduler_loop
+        try:
+            from workers.scheduler import background_scheduler_loop
 
-        scheduler_task = asyncio.create_task(background_scheduler_loop(interval_seconds=30))
+            scheduler_task = asyncio.create_task(background_scheduler_loop(interval_seconds=30))
+            logger.info("Background scheduler started.")
+        except Exception:
+            logger.error("Failed to start background scheduler:\n%s", traceback.format_exc())
+            raise
+
+    logger.info("Application startup complete — yielding to uvicorn.")
     try:
         yield
     finally:
