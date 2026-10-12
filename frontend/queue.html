@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Queue Tracking - GasQ</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">GasQ LPG Queue</a>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <a href="/dealers.html">Find Dealers</a>
+    </div>
+  </header>
+
+  <main class="page narrow">
+    <section id="queueCard" class="panel status-panel">
+      <p class="eyebrow">Real-Time Queue Tracking</p>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <h1 id="tokenTitle">Token</h1>
+        <span id="tokenStatus" class="badge">-</span>
+      </div>
+      <p id="statusMessage" class="status-message">Connecting to queue...</p>
+
+      <dl class="stats">
+        <div>
+          <dt>Dealer</dt>
+          <dd id="dealerName">-</dd>
+        </div>
+        <div>
+          <dt>Currently Serving</dt>
+          <dd id="currentServing">-</dd>
+        </div>
+        <div>
+          <dt>People Ahead</dt>
+          <dd id="peopleAhead">-</dd>
+        </div>
+        <div>
+          <dt>Estimated Wait</dt>
+          <dd id="estimatedWait">-</dd>
+        </div>
+      </dl>
+
+      <div class="action-row">
+        <button id="refreshQueue" class="button secondary" type="button">Refresh</button>
+        <button id="cancelToken" class="button danger" type="button">Cancel Token</button>
+      </div>
+
+      <div id="terminalActionRow" hidden style="margin-top:16px;">
+        <a href="/dealers.html" class="button primary">Find Another Dealer &rarr;</a>
+      </div>
+
+      <p id="message" class="message"></p>
+    </section>
+  </main>
+
+  <script src="/static/js/api.js?v=5"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/notifications.js"></script>
+  <script src="/static/js/queue.js"></script>
+</body>
+</html>

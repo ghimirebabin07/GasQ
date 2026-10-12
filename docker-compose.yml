@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: gasq-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gasq
+      POSTGRES_PASSWORD: gasq_production_password_change_me
+      POSTGRES_DB: gasq
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gasq -d gasq"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gasq-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      GASQ_ENVIRONMENT: production
+      GASQ_DATABASE_URL: postgresql://gasq:gasq_production_password_change_me@db:5432/gasq
+      GASQ_SECRET_KEY: gasq-super-secret-key-for-local-docker-compose-testing-32chars!
+      GASQ_CORS_ORIGINS: http://localhost:8000,http://127.0.0.1:8000
+      GASQ_ADMIN_EMAIL: admin@gasq.local
+      GASQ_ADMIN_PASSWORD: AdminPassword123!
+      GASQ_MAIL_PROVIDER: console
+      GASQ_PHONE_OTP_ENABLED: "false"
+
+volumes:
+  pgdata:
+    driver: local

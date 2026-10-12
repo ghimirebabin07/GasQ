@@ -1,0 +1,18 @@
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.coverage.run]
+source = ["backend"]
+omit = [
+    "backend/tests/*",
+    "backend/alembic/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true

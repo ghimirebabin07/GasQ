@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dealer Dashboard - GasQ LPG</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dealer.css">
+</head>
+<body class="dealer-portal">
+  <!-- Top Navigation Header -->
+  <header class="dealer-topbar">
+    <div class="dealer-brand-group">
+      <a href="/" class="dealer-brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M8 6h8M6 10h12v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10z"></path>
+        </svg>
+        <span>GasQ</span>
+      </a>
+
+      <!-- Dealer Header Info: Shows Depot Name & Label -->
+      <div id="dealerHeaderInfo" class="dealer-header-badge">
+        <span class="dealer-header-eyebrow">DEALER MANAGEMENT</span>
+        <h1 id="dashboardTitle" class="dealer-header-name">LPG Depot Operations</h1>
+      </div>
+    </div>
+
+    <div class="dealer-topbar-actions">
+      <a href="/customer.html" class="dealer-topbar-link">Customer View</a>
+      <button id="refreshDashboard" class="dealer-btn btn-secondary btn-sm" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+        </svg>
+        <span>Refresh</span>
+      </button>
+      <button id="logoutButton" class="dealer-btn btn-secondary btn-sm" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path>
+        </svg>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Container -->
+  <main class="dealer-dashboard-container">
+    <!-- Shop Approval Alert Banner (PENDING / SUSPENDED) -->
+    <div id="dealerApprovalBanner" class="dealer-alert warning" hidden></div>
+
+    <!-- Active Depot Operations Container -->
+    <div id="dealerActionsSection">
+      <!-- Row of 4 Stat Cards in Responsive CSS Grid -->
+      <div class="dealer-stats-grid">
+        <!-- Stat 1: Available Cylinders -->
+        <article class="dealer-stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Available Cylinders</span>
+            <strong id="availableCylinders" class="stat-value">-</strong>
+          </div>
+          <div class="stat-icon-wrapper stat-icon-blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M8 6h8M6 10h12v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10z"></path>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Stat 2: Currently Serving -->
+        <article class="dealer-stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Currently Serving</span>
+            <strong id="currentServing" class="stat-value">-</strong>
+          </div>
+          <div class="stat-icon-wrapper stat-icon-amber">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Stat 3: Waiting Customers -->
+        <article class="dealer-stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Waiting Customers</span>
+            <strong id="waitingCount" class="stat-value">-</strong>
+          </div>
+          <div class="stat-icon-wrapper stat-icon-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Stat 4: Cylinders Sold Today -->
+        <article class="dealer-stat-card">
+          <div class="stat-info">
+            <span class="stat-label">Cylinders Sold Today</span>
+            <strong id="cylindersSoldToday" class="stat-value">0</strong>
+          </div>
+          <div class="stat-icon-wrapper stat-icon-green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+        </article>
+      </div>
+
+      <!-- Main Layout: Two Side-by-Side Sections -->
+      <div class="dealer-main-layout">
+        <!-- Section A: Customer Queue Table -->
+        <section class="dealer-card">
+          <div class="dealer-card-header">
+            <div>
+              <h3>Customer Queue</h3>
+              <p>Live waiting and called tokens for today</p>
+            </div>
+            <button id="callNext" class="dealer-btn btn-primary btn-sm" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>Serve Next</span>
+            </button>
+          </div>
+
+          <div class="dealer-card-body" style="padding: 0;">
+            <div id="queueList" class="queue-table-wrap"></div>
+          </div>
+        </section>
+
+        <!-- Section B: Cylinder Inventory Panel -->
+        <section class="dealer-card">
+          <div class="dealer-card-header">
+            <div>
+              <h3>Cylinder Inventory</h3>
+              <p>Manage stock availability in real time</p>
+            </div>
+          </div>
+
+          <div class="dealer-card-body">
+            <!-- Current Stock Banner -->
+            <div class="inventory-stock-banner">
+              <span class="label">Current Available Stock</span>
+              <span id="currentStockDisplay" class="value">-</span>
+            </div>
+
+            <!-- Low Stock Alert Banner (< 10) -->
+            <div id="lowStockWarning" class="dealer-alert warning" hidden>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <div>
+                <strong>Low Stock Warning</strong>
+                <p>Stock is below 10 cylinders (<span id="lowStockCount">0</span> left). Please restock soon.</p>
+              </div>
+            </div>
+
+            <!-- Stock Update Form -->
+            <form id="stockForm" class="dealer-login-form">
+              <div class="dealer-form-group">
+                <label for="stockInput">Update Available Cylinder Stock</label>
+                <input id="stockInput" class="dealer-input" type="number" min="0" max="10000" required placeholder="Enter cylinder count">
+              </div>
+
+              <!-- Quick Stock Add Chips -->
+              <div>
+                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--dealer-muted);">Quick Add Stock:</span>
+                <div class="quick-stock-chips">
+                  <button type="button" class="quick-stock-chip" data-add="5">+5</button>
+                  <button type="button" class="quick-stock-chip" data-add="10">+10</button>
+                  <button type="button" class="quick-stock-chip" data-add="25">+25</button>
+                  <button type="button" class="quick-stock-chip" data-add="50">+50</button>
+                </div>
+              </div>
+
+              <button class="dealer-btn btn-primary btn-full" type="submit">Update Stock</button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Global Toast / Feedback Notification -->
+    <p id="message" class="dealer-toast-msg" role="status" aria-live="polite"></p>
+  </main>
+
+  <script src="/static/js/session-guard.js"></script>
+  <script src="/static/js/api.js?v=6"></script>
+  <script src="/static/js/auth.js?v=4"></script>
+  <script src="/static/js/dealer.js?v=5"></script>
+</body>
+</html>

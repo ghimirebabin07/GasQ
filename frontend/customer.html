@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Login - GasQ</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">GasQ LPG Queue</a>
+    <a href="/dealer-dashboard.html">Dealer Portal</a>
+  </header>
+
+  <main class="page narrow">
+    <section id="customerAuthSection" class="panel">
+      <h1>Customer Access</h1>
+      <p class="muted">Get a queue token, track your turn in real time, and pick up your LPG cylinder without waiting in line.</p>
+
+      <form id="customerPasswordForm" class="form" method="post" action="#">
+        <label>
+          Full Name (only required for a new account)
+          <input id="name" name="name" type="text" minlength="2" maxlength="100" placeholder="e.g. Ram Bahadur" autocomplete="name">
+        </label>
+        <label>
+          Nepal Phone Number
+          <input id="phone" name="phone" type="tel" required minlength="7" maxlength="15" placeholder="e.g. 9841234567" autocomplete="tel">
+        </label>
+        <label>
+          Password
+          <input id="password" name="password" type="password" required minlength="8" maxlength="72" placeholder="At least 8 characters" autocomplete="current-password">
+        </label>
+        <div class="action-row">
+          <button id="loginCustomerBtn" class="button primary" type="submit">Login with Phone</button>
+          <button id="registerCustomerBtn" class="button secondary" type="button">Create Account</button>
+        </div>
+      </form>
+
+      <p id="message" class="message"></p>
+    </section>
+  </main>
+
+  <script src="/static/js/api.js?v=5"></script>
+  <script src="/static/js/auth.js?v=3"></script>
+  <script src="/static/js/notifications.js?v=2"></script>
+  <script src="/static/js/customer.js?v=2"></script>
+</body>
+</html>

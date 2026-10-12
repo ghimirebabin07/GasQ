@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find LPG Dealer - GasQ</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">GasQ LPG Queue</a>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <a href="/queue.html">My Token</a>
+      <div id="customerLine" style="display:inline-flex;align-items:center;"></div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">LPG Gas Distribution</p>
+        <h1>Authorized Dealers</h1>
+      </div>
+      <button id="refreshDealers" class="button secondary" type="button">Refresh List</button>
+    </div>
+
+    <!-- Active Token Banner (if already in queue) -->
+    <section id="activeTokenBanner" hidden></section>
+
+    <!-- Search & Filter Controls -->
+    <div class="search-toolbar">
+      <div class="search-input-wrapper">
+        <input id="dealerSearch" type="search" placeholder="Search by dealer name, area, or address...">
+      </div>
+      <label class="checkbox-label">
+        <input id="inStockOnly" type="checkbox">
+        In-stock cylinders only
+      </label>
+    </div>
+
+    <section id="dealerGrid" class="grid"></section>
+    <p id="message" class="message"></p>
+  </main>
+
+  <script src="/static/js/api.js?v=5"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/notifications.js"></script>
+  <script src="/static/js/customer.js"></script>
+</body>
+</html>

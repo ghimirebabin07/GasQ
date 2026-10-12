@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Depot - GasQ LPG</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dealer.css">
+</head>
+<body class="dealer-portal">
+  <!-- Minimal Top Navigation -->
+  <header class="dealer-topbar">
+    <div class="dealer-brand-group">
+      <a href="/" class="dealer-brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M8 6h8M6 10h12v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10z"></path>
+        </svg>
+        <span>GasQ</span>
+      </a>
+    </div>
+
+    <div class="dealer-topbar-actions">
+      <a href="/customer.html" class="dealer-topbar-link">Customer View</a>
+      <a href="/dealer-login.html" class="dealer-topbar-link">Dealer Login</a>
+    </div>
+  </header>
+
+  <!-- Centered Registration Card -->
+  <main class="dealer-auth-wrapper">
+    <article class="dealer-login-card" style="max-width: 540px;">
+      <div class="dealer-login-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="8.5" cy="7" r="4"></circle>
+          <line x1="20" y1="8" x2="20" y2="14"></line>
+          <line x1="23" y1="11" x2="17" y2="11"></line>
+        </svg>
+      </div>
+
+      <div class="dealer-login-header">
+        <h2>Register New LPG Depot</h2>
+        <p>Register your authorized gas shop. Accounts will be reviewed by admin before listing.</p>
+      </div>
+
+      <form id="registerForm" class="dealer-login-form" method="post" action="#" novalidate>
+        <div class="register-form-grid">
+          <div class="dealer-form-group full-span">
+            <label for="registerName">Depot / Shop Name</label>
+            <input id="registerName" class="dealer-input" type="text" required minlength="3" maxlength="120" placeholder="e.g. Bhaktapur Nepal Gas Center" autocomplete="organization">
+          </div>
+
+          <div class="dealer-form-group">
+            <label for="registerUsername">Owner / Dealer ID</label>
+            <input id="registerUsername" class="dealer-input" type="text" required minlength="4" maxlength="40" placeholder="e.g. bhaktapur_gas" autocomplete="username">
+          </div>
+
+          <div class="dealer-form-group">
+            <label for="registerPhone">Contact Phone (+977)</label>
+            <input id="registerPhone" class="dealer-input" type="tel" required minlength="7" maxlength="15" placeholder="9841XXXXXX" autocomplete="tel">
+          </div>
+
+          <div class="dealer-form-group full-span">
+            <label for="registerEmail">Email Address</label>
+            <input id="registerEmail" class="dealer-input" type="email" required minlength="6" maxlength="255" placeholder="contact@bhaktapurgas.com" autocomplete="email">
+          </div>
+
+          <div class="dealer-form-group full-span">
+            <label for="registerAddress">Depot Address / Location</label>
+            <input id="registerAddress" class="dealer-input" type="text" required minlength="3" maxlength="255" placeholder="Ward 2, Suryabinayak, Bhaktapur" autocomplete="street-address">
+          </div>
+
+          <div class="dealer-form-group">
+            <label for="registerPassword">Password</label>
+            <input id="registerPassword" class="dealer-input" type="password" required minlength="8" maxlength="72" placeholder="Min 8 chars with letter &amp; number" autocomplete="new-password">
+          </div>
+
+          <div class="dealer-form-group">
+            <label for="registerConfirmPassword">Confirm Password</label>
+            <input id="registerConfirmPassword" class="dealer-input" type="password" required minlength="8" maxlength="72" placeholder="Re-enter password" autocomplete="new-password">
+          </div>
+
+          <div class="dealer-form-group full-span">
+            <label for="registerStock">Initial Cylinder Stock</label>
+            <input id="registerStock" class="dealer-input" type="number" min="0" max="10000" value="50" required>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+          <button id="registerSubmitBtn" class="dealer-btn btn-primary btn-full" type="submit">Submit Shop for Approval</button>
+          <a href="/dealer-login.html" class="dealer-btn btn-secondary btn-full">Back to Dealer Login</a>
+        </div>
+      </form>
+    </article>
+
+    <p id="message" class="dealer-toast-msg" role="status" aria-live="polite"></p>
+  </main>
+
+  <script src="/static/js/api.js?v=6"></script>
+  <script src="/static/js/auth.js?v=4"></script>
+  <script src="/static/js/dealer-auth.js?v=1"></script>
+</body>
+</html>

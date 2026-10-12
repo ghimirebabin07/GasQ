@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - GasQ</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">GasQ LPG Queue</a>
+    <div style="display:flex;align-items:center;gap:18px;">
+      <a href="/customer.html">Customer View</a>
+      <a href="/dealer-dashboard.html">Dealer View</a>
+      <button id="adminLogout" class="button secondary small" type="button" hidden>Logout</button>
+    </div>
+  </header>
+
+  <main class="page narrow">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">Administration</p>
+        <h1>Dealer Operations &amp; Approvals</h1>
+      </div>
+    </div>
+
+    <!-- Session Expired Alert Banner -->
+    <div id="sessionExpiredAlert" class="alert-banner warning" style="display: none; margin-bottom: 20px;">
+      <strong>Notice:</strong> Session expired. Please log in again.
+    </div>
+
+    <section id="adminLoginPanel" class="panel">
+      <h2>Admin Login</h2>
+      <p class="muted">Sign in to approve or suspend dealer accounts.</p>
+      
+      <form id="adminLoginForm" class="form" method="post" action="#" novalidate>
+        <label>
+          Email Address
+          <input id="adminEmail" type="email" required autocomplete="username" placeholder="admin@example.com">
+        </label>
+        
+        <label>
+          Password
+          <input id="adminPassword" type="password" required autocomplete="current-password" placeholder="Enter admin password">
+        </label>
+
+        <!-- Two-Factor Authentication TOTP Field -->
+        <div id="totpSection" style="display: none;">
+          <label>
+            Two-Factor Auth Code (TOTP)
+            <input id="adminTotp" type="text" maxlength="6" pattern="[0-9]{6}" placeholder="6-digit authenticator code" autocomplete="one-time-code">
+          </label>
+        </div>
+
+        <button class="button primary" type="submit" id="adminLoginBtn">Sign in as Admin</button>
+      </form>
+    </section>
+
+    <!-- Admin Operations Panel (When Authenticated) -->
+    <section id="adminPanel" hidden>
+      <div class="panel-heading">
+        <h2>Registered Dealers</h2>
+        <button id="refreshDealers" class="button secondary small" type="button">Refresh</button>
+      </div>
+      <div id="adminDealerList" class="queue-list"></div>
+    </section>
+
+    <!-- Sensitive Action Password Confirmation Modal -->
+    <div id="reauthModal" class="modal-overlay">
+      <div class="modal-card">
+        <h3>Confirm Admin Password</h3>
+        <p class="muted">Security verification: Please re-enter your administrator password before performing this sensitive operation.</p>
+        <form id="reauthForm" style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+          <label>
+            Admin Password
+            <input id="reauthPasswordInput" type="password" required placeholder="Enter password to confirm">
+          </label>
+          <div style="display: flex; gap: 12px;">
+            <button class="button primary" type="submit" id="reauthConfirmBtn" style="flex: 1;">Confirm Action</button>
+            <button class="button secondary" type="button" id="reauthCancelBtn" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <p id="adminMessage" class="message"></p>
+  </main>
+
+  <script src="/static/js/session-guard.js"></script>
+  <script src="/static/js/api.js?v=7"></script>
+  <script src="/static/js/auth.js?v=5"></script>
+  <script src="/static/js/admin.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,813 @@
+/* ==========================================================================
+   GasQ Dealer Management Portal - Dedicated Stylesheet
+   Designed for clean, professional, responsive depot operation.
+   Follows 8px spacing scale, Inter/system font, #2563eb primary color.
+   ========================================================================== */
+
+:root {
+  --dealer-primary: #2563eb;
+  --dealer-primary-hover: #1d4ed8;
+  --dealer-primary-light: #eff6ff;
+  --dealer-primary-border: #bfdbfe;
+  
+  --dealer-bg: #f5f7fa;
+  --dealer-surface: #ffffff;
+  --dealer-text: #111827;
+  --dealer-text-secondary: #4b5563;
+  --dealer-muted: #6b7280;
+  --dealer-line: #e5e7eb;
+  --dealer-line-dark: #d1d5db;
+  
+  --dealer-success: #059669;
+  --dealer-success-bg: #ecfdf5;
+  --dealer-success-border: #a7f3d0;
+  
+  --dealer-warning: #d97706;
+  --dealer-warning-bg: #fffbeb;
+  --dealer-warning-border: #fde68a;
+  
+  --dealer-danger: #dc2626;
+  --dealer-danger-bg: #fef2f2;
+  --dealer-danger-border: #fecaca;
+
+  --dealer-radius-sm: 6px;
+  --dealer-radius: 8px;
+  --dealer-radius-lg: 12px;
+  --dealer-radius-xl: 16px;
+  
+  --dealer-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --dealer-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --dealer-shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+body.dealer-portal {
+  background-color: var(--dealer-bg);
+  color: var(--dealer-text);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   Top Header Navigation
+   ========================================================================== */
+.dealer-topbar {
+  background: var(--dealer-surface);
+  border-bottom: 1px solid var(--dealer-line);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.dealer-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dealer-brand {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--dealer-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dealer-header-badge {
+  display: inline-flex;
+  flex-direction: column;
+  border-left: 1px solid var(--dealer-line);
+  padding-left: 16px;
+}
+
+.dealer-header-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dealer-primary);
+  line-height: 1;
+}
+
+.dealer-header-name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--dealer-text);
+  margin: 2px 0 0 0;
+  line-height: 1.2;
+}
+
+.dealer-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dealer-topbar-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--dealer-text-secondary);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: var(--dealer-radius);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.dealer-topbar-link:hover {
+  background-color: var(--dealer-primary-light);
+  color: var(--dealer-primary);
+}
+
+/* ==========================================================================
+   Shared Form Controls & Buttons
+   ========================================================================== */
+.dealer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 20px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--dealer-radius);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.dealer-btn.btn-primary {
+  background-color: var(--dealer-primary);
+  color: #ffffff;
+  border-color: var(--dealer-primary);
+  box-shadow: var(--dealer-shadow-sm);
+}
+
+.dealer-btn.btn-primary:hover:not(:disabled) {
+  background-color: var(--dealer-primary-hover);
+  border-color: var(--dealer-primary-hover);
+}
+
+.dealer-btn.btn-secondary {
+  background-color: var(--dealer-surface);
+  color: var(--dealer-text);
+  border-color: var(--dealer-line-dark);
+}
+
+.dealer-btn.btn-secondary:hover:not(:disabled) {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.dealer-btn.btn-sm {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 0.8125rem;
+}
+
+.dealer-btn.btn-full {
+  width: 100%;
+}
+
+.dealer-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dealer-input,
+.dealer-select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  font-size: 0.9375rem;
+  color: var(--dealer-text);
+  background-color: var(--dealer-surface);
+  border: 1px solid var(--dealer-line-dark);
+  border-radius: var(--dealer-radius);
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.dealer-input:focus,
+.dealer-select:focus {
+  outline: none;
+  border-color: var(--dealer-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.dealer-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.dealer-form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dealer-text);
+}
+
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrap input {
+  padding-right: 44px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--dealer-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--dealer-radius-sm);
+}
+
+.password-toggle-btn:hover {
+  color: var(--dealer-text);
+}
+
+/* ==========================================================================
+   VIEW 1: Logged Out Login Screen (Centered Card)
+   ========================================================================== */
+.dealer-auth-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  min-height: calc(100vh - 64px);
+  box-sizing: border-box;
+}
+
+.dealer-login-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--dealer-surface);
+  border: 1px solid var(--dealer-line);
+  border-radius: var(--dealer-radius-xl);
+  box-shadow: var(--dealer-shadow-lg);
+  padding: 32px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.dealer-login-icon {
+  width: 52px;
+  height: 52px;
+  background-color: var(--dealer-primary-light);
+  color: var(--dealer-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.dealer-login-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dealer-text);
+  margin: 0 0 8px 0;
+}
+
+.dealer-login-header p {
+  font-size: 0.875rem;
+  color: var(--dealer-muted);
+  margin: 0 0 24px 0;
+  line-height: 1.5;
+}
+
+.dealer-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: var(--dealer-muted);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid var(--dealer-line);
+}
+
+.auth-divider span {
+  padding: 0 12px;
+}
+
+/* ==========================================================================
+   Register Modal
+   ========================================================================== */
+.dealer-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.dealer-modal-card {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--dealer-surface);
+  border: 1px solid var(--dealer-line);
+  border-radius: var(--dealer-radius-xl);
+  box-shadow: var(--dealer-shadow-lg);
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.dealer-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dealer-modal-header h3 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+
+.dealer-modal-header p {
+  font-size: 0.875rem;
+  color: var(--dealer-muted);
+  margin: 0;
+}
+
+.dealer-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--dealer-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.dealer-modal-close:hover {
+  color: var(--dealer-text);
+}
+
+.register-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.register-form-grid .full-span {
+  grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   VIEW 2: Logged In Dashboard Container
+   ========================================================================== */
+.dealer-dashboard-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Status Alert Banners */
+.dealer-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--dealer-radius-lg);
+  margin-bottom: 24px;
+  border: 1px solid transparent;
+}
+
+[hidden],
+.dealer-alert[hidden],
+.dealer-modal-overlay[hidden] {
+  display: none !important;
+}
+
+.dealer-alert.warning {
+  background-color: var(--dealer-warning-bg);
+  border-color: var(--dealer-warning-border);
+  color: #92400e;
+}
+
+.dealer-alert.danger {
+  background-color: var(--dealer-danger-bg);
+  border-color: var(--dealer-danger-border);
+  color: #b91c1c;
+}
+
+.dealer-alert.success {
+  background-color: var(--dealer-success-bg);
+  border-color: var(--dealer-success-border);
+  color: #065f46;
+}
+
+.dealer-alert p {
+  margin: 4px 0 0 0;
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Row of 4 Stat Cards (Responsive Grid)
+   ========================================================================== */
+.dealer-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dealer-stat-card {
+  background-color: var(--dealer-surface);
+  border: 1px solid var(--dealer-line);
+  border-radius: var(--dealer-radius-lg);
+  padding: 20px;
+  box-shadow: var(--dealer-shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dealer-stat-card:hover {
+  box-shadow: var(--dealer-shadow);
+  transform: translateY(-1px);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--dealer-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--dealer-text);
+  line-height: 1.1;
+}
+
+.stat-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--dealer-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon-blue {
+  background-color: var(--dealer-primary-light);
+  color: var(--dealer-primary);
+}
+
+.stat-icon-amber {
+  background-color: var(--dealer-warning-bg);
+  color: var(--dealer-warning);
+}
+
+.stat-icon-purple {
+  background-color: #f5f3ff;
+  color: #7c3aed;
+}
+
+.stat-icon-green {
+  background-color: var(--dealer-success-bg);
+  color: var(--dealer-success);
+}
+
+/* ==========================================================================
+   Dashboard Main Sections (Two Columns Side-by-Side)
+   ========================================================================== */
+.dealer-main-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.dealer-card {
+  background-color: var(--dealer-surface);
+  border: 1px solid var(--dealer-line);
+  border-radius: var(--dealer-radius-lg);
+  box-shadow: var(--dealer-shadow-sm);
+  overflow: hidden;
+}
+
+.dealer-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--dealer-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dealer-card-header h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--dealer-text);
+  margin: 0;
+}
+
+.dealer-card-header p {
+  font-size: 0.8125rem;
+  color: var(--dealer-muted);
+  margin: 2px 0 0 0;
+}
+
+.dealer-card-body {
+  padding: 24px;
+}
+
+/* ==========================================================================
+   Customer Queue Table
+   ========================================================================== */
+.queue-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.queue-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.queue-table th {
+  background-color: #f9fafb;
+  color: var(--dealer-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--dealer-line);
+}
+
+.queue-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--dealer-line);
+  vertical-align: middle;
+}
+
+.queue-table tr:last-child td {
+  border-bottom: none;
+}
+
+.queue-table tr.row-called {
+  background-color: #fffdf5;
+}
+
+.queue-token-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  background-color: var(--dealer-primary-light);
+  color: var(--dealer-primary);
+  padding: 4px 10px;
+  border-radius: var(--dealer-radius-sm);
+  border: 1px solid var(--dealer-primary-border);
+}
+
+.queue-table tr.row-called .queue-token-pill {
+  background-color: var(--dealer-warning-bg);
+  color: var(--dealer-warning);
+  border-color: var(--dealer-warning-border);
+}
+
+.queue-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.queue-status-badge.waiting {
+  background-color: #f3f4f6;
+  color: var(--dealer-text-secondary);
+}
+
+.queue-status-badge.serving {
+  background-color: var(--dealer-warning-bg);
+  color: #92400e;
+  border: 1px solid var(--dealer-warning-border);
+}
+
+.queue-status-badge.served {
+  background-color: var(--dealer-success-bg);
+  color: var(--dealer-success);
+}
+
+.queue-table-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.queue-empty-box {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--dealer-muted);
+}
+
+.queue-empty-box svg {
+  margin-bottom: 12px;
+  color: #9ca3af;
+}
+
+/* ==========================================================================
+   Cylinder Inventory Panel Controls
+   ========================================================================== */
+.inventory-stock-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9fafb;
+  border: 1px solid var(--dealer-line);
+  border-radius: var(--dealer-radius);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.inventory-stock-banner .label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dealer-text-secondary);
+}
+
+.inventory-stock-banner .value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--dealer-primary);
+}
+
+.quick-stock-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px 0 16px;
+}
+
+.quick-stock-chip {
+  background-color: var(--dealer-primary-light);
+  color: var(--dealer-primary);
+  border: 1px solid var(--dealer-primary-border);
+  padding: 6px 12px;
+  border-radius: var(--dealer-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quick-stock-chip:hover {
+  background-color: var(--dealer-primary);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Global Toast/Feedback Message
+   ========================================================================== */
+.dealer-toast-msg {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #1f2937;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--dealer-radius);
+  box-shadow: var(--dealer-shadow-lg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 999;
+  max-width: 380px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.dealer-toast-msg.success-msg {
+  background-color: var(--dealer-success);
+}
+
+.dealer-toast-msg:empty {
+  display: none;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   - 1280px Desktop: Clean 4-column stats, side-by-side queue & stock
+   - 768px Tablet: 2-column stats, stacked queue & stock
+   - 360px Mobile: 1-column stats, full-width inputs/buttons, no scroll
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .dealer-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dealer-main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dealer-topbar {
+    padding: 0 16px;
+  }
+
+  .dealer-dashboard-container {
+    padding: 16px;
+  }
+
+  .dealer-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .dealer-card-header {
+    padding: 16px;
+  }
+
+  .dealer-card-body {
+    padding: 16px;
+  }
+
+  .dealer-login-card {
+    padding: 24px 16px;
+  }
+
+  .register-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .queue-table th,
+  .queue-table td {
+    padding: 10px 12px;
+  }
+
+  .queue-table-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .queue-table-actions .dealer-btn {
+    width: 100%;
+  }
+}
